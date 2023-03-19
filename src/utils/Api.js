@@ -19,24 +19,24 @@ class Api {
     }).then((res) => this._verifyResponse(res));
   }
 
-  setUserInfo({ name, job }) {
-    // редактирование информации  о пользователе скобки
+  setUserInfo({ name, about }) {
+    // редактирование информации  о пользователе
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
         name: name,
-        about: job,
+        about: about,
       }),
     }).then((res) => this._verifyResponse(res));
   }
 
-  setAvatarInfo({ avatar }) {
+  setAvatarInfo(data) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        avatar: avatar.link,
+        avatar: data.avatar,
       }),
     }).then((res) => this._verifyResponse(res));
   }
@@ -75,6 +75,14 @@ class Api {
       method: "DELETE",
       headers: this._headers,
     }).then((res) => this._verifyResponse(res));
+  }
+
+  changeLikeCardStatus(id, isLiked) {
+    if (isLiked) {
+      return this.clickLike(id);
+    } else {
+      return this.delClickLike(id);
+    }
   }
 
   deleteCard(cardId) {
