@@ -1,27 +1,27 @@
-import React from "react";
-//import './index.css';
+import {useEffect, useState} from 'react';
 import Header from "./Header";
 import Main from "./Main";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
+import PopupWithForm from './PopupWithForm';
 import Footer from "./Footer";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import api from "../utils/api";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
-    React.useState(false);
+    useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
-    React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({});
-  const [currentUser, setCurrentUser] = React.useState({});
-  const [cards, setCards] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(false);
+    useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIsLoading(!isLoading);
     Promise.all([api.getProfileInfo(), api.getServerCards()])
       .then(([userData, initialCards]) => {
@@ -45,6 +45,7 @@ function App() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   };
 
+  
   const handleAddPlaceClick = () => {
     setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
   };
@@ -67,11 +68,11 @@ function App() {
       });
   }
 
-  function handleDeleteCard(cardId) {
+  function handleDeleteCard(cardId) { //.
     api
       .deleteCard(cardId)
       .then(() => {
-        setCards((cards) => cards.filter((card) => card._id !== cardId));
+        setCards(state => state.filter((c) => c._id !== cardId));
       })
       .catch((err) => {
         console.log(err);
@@ -172,9 +173,9 @@ function App() {
             onClose={closeAllPopups}
             onAddPlace={handleAddPlaceSubmit}
           />
-
+         
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-
+         
           <Footer />
         </main>
       </div>
