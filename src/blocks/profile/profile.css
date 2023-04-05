@@ -6,11 +6,13 @@
   width: 100%;
   box-sizing: border-box;
   align-items: center;
+  padding-top: 36.25px;
 }
 
 @media screen and (max-width: 984px) {
   .profile {
     max-width: 282px;
     flex-direction: column;
+    padding-top: 38.25px;
   }
 }
